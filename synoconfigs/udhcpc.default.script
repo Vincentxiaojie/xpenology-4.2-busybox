@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# binary
+CAT="/bin/cat"
+ECHO="/bin/echo"
+IFCONFIG="/sbin/ifconfig"
+IP="/sbin/ip"
+MKDIR="/bin/mkdir"
+RM="/bin/rm"
+
+# path
+DHCPCD_DIR="/etc/dhcpc"
+DHCPCD_INFO="${DHCPCD_DIR}/dhcpcd-${interface}.info"
+RESOLV_CONF="/etc/resolv.conf"
+
+case "$1" in
+deconfig)
+	${IFCONFIG} ${interface} 0.0.0.0
+	${RM} -f ${DHCPCD_INFO}
+	;;
+bound)
+	${IFCONFIG} ${interface} inet ${ip} netmask ${subnet}
+	${IP} route add default via ${router}
+	${MKDIR} -p ${DHCPCD_DIR}
+	${CAT} << EOF > ${DHCPCD_INFO}
+IPADDR=${ip}
+NETMASK=${subnet}
+BROADCAST=${broadcast}
+GATEWAY=${router}
+DOMAIN=${domain}
+DNS=${dns}
+DHCPSID=${serverid}
+LEASETIME=${lease}
+INTERFACE=${interface}
+EOF
+[ ! -z ${dns} ] && ${ECHO} "nameserver ${dns}" > ${RESOLV_CONF}
+	;;
+esac
+

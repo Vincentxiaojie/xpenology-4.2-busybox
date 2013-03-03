@@ -1,0 +1,36 @@
+#
+# For a description of the syntax of this configuration file,
+# see scripts/kbuild/config-language.txt.
+#
+
+menu "Synology Commands"
+
+config GET_KEY_VALUE
+	bool "get_key_value"
+	default n
+	help
+	  get_key_value is a command allows you to get value in a file by
+	  key.
+
+config SYNODD
+	bool "synodd"
+	default n
+	help
+	  synodd is a command allows you to dd multi-devices with bs=1M 
+	  concurrently.
+
+config BLOCKDEV
+	bool "blockdev"
+	default n
+	help
+	  Blockdev is a small utility to provide an interface to block devices
+	  from the shell.  It allows certain ioctl calls to be made, and their
+	  results printed.
+
+config KILLPS
+	bool "killps"
+	default n
+	help
+	  Kill processes by file descriptors in specified directory.
+
+endmenu

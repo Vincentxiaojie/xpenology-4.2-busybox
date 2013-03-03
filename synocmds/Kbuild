@@ -1,0 +1,6 @@
+
+lib-y	+=	synolib.o
+lib-$(CONFIG_GET_KEY_VALUE)		+= get_key_value.o
+lib-$(CONFIG_SYNODD)			+= synodd.o
+lib-$(CONFIG_BLOCKDEV)			+= blockdev.o
+lib-$(CONFIG_KILLPS)			+= killps.o
